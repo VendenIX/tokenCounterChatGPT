@@ -7,4 +7,4 @@ Token Counter for ChatGPT is a useful browser extension designed to enhance your
 
 Star this project for updates and new features!
 
-![Token Counter for ChatGPT](icons/background.png)
+![Token Counter for ChatGPT](icons/background2.png)
