@@ -1,7 +1,7 @@
 {
     "manifest_version": 2,
     "name": "Token Counter for ChatGPT",
-    "version": "2.5",
+    "version": "2.7.1",
     "description": "Show the number of tokens in the current prompt for ChatGPT",
     "permissions": ["storage"],
     "background": {
@@ -18,7 +18,7 @@
     },
     "content_scripts": [
       {
-        "matches": ["*://chat.openai.com/c/*"],
+        "matches": ["*://chat.openai.com/*"],
         "js": ["contentScript.js"],
         "run_at": "document_end"
       }
