@@ -1,12 +1,12 @@
-
 function countTokens(str) {
     return str.split(/\s+/).length;
 }
 
 let tokenCounterDiv = null;
 let toggleButton = null;
-let inputField = document.querySelector('textarea');
-let isHidden = false; 
+// recuperer le texte du prompt chatgpt:
+let inputField = document.querySelector('#prompt-textarea');
+let isHidden = false;
 let isActivedByDefault = true;
 
 // Charge la valeur actuelle de la case à cocher depuis le stockage local
@@ -33,15 +33,21 @@ browser.runtime.onMessage.addListener((message) => {
 function setupTokenCounter() {
     if (inputField) {
         tokenCounterDiv = document.createElement('div');
-        tokenCounterDiv.style.position = 'absolute';
-        tokenCounterDiv.style.top = '-30px';
-        tokenCounterDiv.style.left = '0'; 
+        //rendre le truc flotant pour le foutre au dessus:
+        tokenCounterDiv.className = 'token-counter';
+        tokenCounterDiv.style.top = '-1px';
+        tokenCounterDiv.style.left = '200px';
         tokenCounterDiv.style.padding = '0px';
+        tokenCounterDiv.style.marginLeft = '15px';
+        //pour mettre le texte en bold ou strong si tu veux:
+        tokenCounterDiv.style.fontWeight = 'bold';
         tokenCounterDiv.style.color = 'white';
         tokenCounterDiv.textContent = 'Tokens: 0';
+        tokenCounterDiv.style.zIndex = '10000';
+        tokenCounterDiv.style.textContent = "Tokens: 0"
 
         toggleButton = document.createElement('button');
-        toggleButton.addEventListener('click', function() {
+        toggleButton.addEventListener('click', function () {
             if (toggleButton.textContent === 'OFF') {
                 toggleButton.textContent = 'ON';
                 toggleButton.style.backgroundColor = '#2ECC40'; // Vert pour ON
@@ -55,8 +61,9 @@ function setupTokenCounter() {
             }
         });
 
-        inputField.parentElement.appendChild(tokenCounterDiv);
-
+        setTimeout(() => {
+            inputField.insertAdjacentElement('beforebegin', tokenCounterDiv);
+        }, 1000);
         if (isActivedByDefault) {
             inputField.addEventListener('input', updateTokenCount);
         }
@@ -71,7 +78,7 @@ function removeTokenCounter() {
 }
 
 function createTokenCounter() {
-    inputField = document.querySelector('textarea');
+    inputField = document.querySelector('#prompt-textarea');
     setupTokenCounter();
 
 }
@@ -109,8 +116,7 @@ function toggleButtonClick() {
     if (isActivedByDefault) {
         inputField.addEventListener('input', updateTokenCount);
         tokenCounterDiv.style.display = 'block'; // Afficher le compteur de jetons
-    }
-    else {
+    } else {
         inputField.removeEventListener('input', updateTokenCount);
         tokenCounterDiv.style.display = 'none'; // Masquer le compteur de jetons
     }
@@ -121,9 +127,9 @@ function toggleButtonClick() {
 let currentUrl = window.location.href;
 
 setInterval(() => {
-  if (window.location.href !== currentUrl) {
-    currentUrl = window.location.href;
-    removeTokenCounter();
-    createTokenCounter();
-  }
+    if (window.location.href !== currentUrl) {
+        currentUrl = window.location.href;
+        removeTokenCounter();
+        createTokenCounter();
+    }
 }, 4000); // Vérifiez toutes les 500 millisecondes
