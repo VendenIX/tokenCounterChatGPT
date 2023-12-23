@@ -7,9 +7,9 @@
   "action": {
     "default_popup": "popup.html",
     "default_icon": {
-      "16": "icons/logoToken.png",
-      "48": "icons/logoToken.png",
-      "128": "icons/logoToken.png"
+      "16": "icons/favicons_imgs/favicon-16x16.png",
+      "48": "icons/favicons_imgs/android-icon-48x48.png",
+      "128": "icons/favicons_imgs/favicon-128x128.png"
     }
   },
   "background": {
@@ -24,5 +24,17 @@
   ],
   "host_permissions": [
     "*://chat.openai.com/*"
-  ]
+  ],
+  "icons": {
+    "16": "icons/favicons_imgs/favicon-16x16.png",
+    "32": "icons/favicons_imgs/favicon-32x32.png",
+    "48": "icons/favicons_imgs/android-icon-48x48.png",
+    "72": "icons/favicons_imgs/android-icon-72x72.png",
+    "96": "icons/favicons_imgs/android-icon-96x96.png",
+    "128": "icons/favicons_imgs/favicon-128x128.png",
+    "144": "icons/favicons_imgs/apple-icon-144x144.png",
+    "152": "icons/favicons_imgs/apple-icon-152x152.png",
+    "180": "icons/favicons_imgs/apple-icon-180x180.png",
+    "192": "icons/favicons_imgs/android-icon-192x192.png"
+  }
 }
