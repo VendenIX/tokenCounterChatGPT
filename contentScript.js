@@ -3,20 +3,12 @@ function countTokens(str) {
 }
 
 let tokenCounterDiv = null;
-let toggleButton = null;
 // recuperer le texte du prompt chatgpt:
 let inputField = document.querySelector('#prompt-textarea');
 let isHidden = false;
 let isActivedByDefault = true;
 
-// Charge la valeur actuelle de la case à cocher depuis le stockage local
-browser.runtime.onMessage.addListener((message) => {
-    if (message.action === 'enableTokenCounter') {
-        setupTokenCounter(); // Exécute la logique de setupTokenCounter
-    }
-});
-
-browser.runtime.onMessage.addListener((message) => {
+chrome.runtime.onMessage.addListener((message) => {
     if (message.action === 'activateFunction') {
         // Appelez la fonction à activer ici
         hideAndActivate();
@@ -24,13 +16,11 @@ browser.runtime.onMessage.addListener((message) => {
     // Ajoutez le traitement pour d'autres actions si nécessaire
 });
 
-browser.runtime.onMessage.addListener((message) => {
-    if (message.action === 'toggleButtonClick') {
-        toggleButtonClick();
-    }
-});
-
 function setupTokenCounter() {
+    /*
+    if (tokenCounterConfigured) return;
+    tokenCounterConfigured = true;
+    */
     if (inputField) {
         tokenCounterDiv = document.createElement('div');
         //rendre le truc flotant pour le foutre au dessus:
@@ -45,21 +35,6 @@ function setupTokenCounter() {
         tokenCounterDiv.textContent = 'Tokens: 0';
         tokenCounterDiv.style.zIndex = '10000';
         tokenCounterDiv.style.textContent = "Tokens: 0"
-
-        toggleButton = document.createElement('button');
-        toggleButton.addEventListener('click', function () {
-            if (toggleButton.textContent === 'OFF') {
-                toggleButton.textContent = 'ON';
-                toggleButton.style.backgroundColor = '#2ECC40'; // Vert pour ON
-                inputField.addEventListener('input', updateTokenCount);
-                isActivedByDefault = false;
-            } else {
-                toggleButton.textContent = 'OFF';
-                toggleButton.style.backgroundColor = '#FF4136'; // Rouge pour OFF
-                inputField.removeEventListener('input', updateTokenCount);
-                isActivedByDefault = true;
-            }
-        });
 
         setTimeout(() => {
             inputField.insertAdjacentElement('beforebegin', tokenCounterDiv);
@@ -95,11 +70,6 @@ function hideAndActivate() {
     isHidden = !isHidden;
     isActivedByDefault = !isActivedByDefault;
 
-    if (isHidden) {
-        toggleButton.style.display = 'none'; // Masquer le bouton ON/OFF
-    } else {
-        toggleButton.style.display = 'block'; // Afficher le bouton ON/OFF
-    }
 
     if (isActivedByDefault) {
         inputField.addEventListener('input', updateTokenCount);
@@ -110,26 +80,17 @@ function hideAndActivate() {
     }
 }
 
-function toggleButtonClick() {
-    isActivedByDefault = !isActivedByDefault;
 
-    if (isActivedByDefault) {
-        inputField.addEventListener('input', updateTokenCount);
-        tokenCounterDiv.style.display = 'block'; // Afficher le compteur de jetons
-    } else {
-        inputField.removeEventListener('input', updateTokenCount);
-        tokenCounterDiv.style.display = 'none'; // Masquer le compteur de jetons
-    }
-
-    updateTokenCount();
-}
-
-let currentUrl = window.location.href;
-
-setInterval(() => {
-    if (window.location.href !== currentUrl) {
-        currentUrl = window.location.href;
+// Utiliser un observeur pour détecter les changements dans l'URL au lieu d'un setInterval
+let lastUrl = location.href; 
+new MutationObserver(() => {
+    const url = location.href;
+    if (url !== lastUrl) {
+        console.log("CHANGEMENT !!!")
+        lastUrl = url;
         removeTokenCounter();
+        tokenCounterConfigured = false; // Reset le flag
+        setupTokenCounter();
         createTokenCounter();
     }
-}, 4000); // Vérifiez toutes les 500 millisecondes
+}).observe(document, { subtree: true, childList: true });
