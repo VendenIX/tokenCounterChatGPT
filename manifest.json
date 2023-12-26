@@ -3,7 +3,7 @@
   "name": "Token Counter for ChatGPT",
   "version": "2.7.1",
   "description": "Show the number of tokens in the current prompt for ChatGPT",
-  "permissions": ["storage", "activeTab", "scripting"],
+  "permissions": [],
   "action": {
     "default_popup": "popup.html",
     "default_icon": {
