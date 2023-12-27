@@ -6,6 +6,7 @@ This Chrome extension shows the number of tokens in the current prompt for ChatG
 
 **Download here:** [Chrome Web Store]([https://chrome.google.com/webstore/detail/token-counter-for-chatgpt/](https://chromewebstore.google.com/detail/token-counter-for-chatgpt/njepjfebkcdhfobjfgpgblgoeighgfie?hl=fr))
 https://chromewebstore.google.com/detail/token-counter-for-chatgpt/njepjfebkcdhfobjfgpgblgoeighgfie?hl=fr
+
 [Firefox store]([[https://chrome.google.com/webstore/detail/token-counter-for-chatgpt/](https://chromewebstore.google.com/detail/token-counter-for-chatgpt/njepjfebkcdhfobjfgpgblgoeighgfie?hl=fr](https://addons.mozilla.org/fr/firefox/addon/token-counter-for-chatgpt)))
 https://addons.mozilla.org/fr/firefox/addon/token-counter-for-chatgpt
 ## About Token Counter for ChatGPT
